@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<!-- <context:component-scan base-package="ee.statistics.datalogger.service"/> -->
+	<!--For an example, lets do this manually-->
+	<bean id="classMonitorAspect" class="ee.statistics.datalogger.service.ClassMonitorAspect" />
+	<bean id="methodExecutionLogging" class="ee.statistics.datalogger.service.MethodExecutionLoggingListener">
+		<constructor-arg ref="classMonitorAspect"/>
+	</bean>
+
+	<!--Same as class based config: @EnableAspectJAutoProxy-->
+	<!-- Annotation based, searches for @Aspect beans -->
+	<aop:aspectj-autoproxy/>
+
+	<!-- configuration based. Not tested!!! -->
+ 	<!--<aop:config>-->
+ 		<!--<aop:aspect ref="classMonitorAspect">-->
+			<!--&lt;!&ndash;execution(modifiers-pattern? ret-type-pattern declaring-type-pattern? name-pattern(param-pattern) throws-pattern?) &ndash;&gt;-->
+ 			<!--<aop:pointcut id="around-service" expression="execution(* com.blah..*.*(..))" />-->
+ 			<!--<aop:around pointcut-ref="around-service" method="handleMethodMessagesAndTiming" />-->
+ 		<!--</aop:aspect>-->
+ 	<!--</aop:config>-->
+
+</beans>
